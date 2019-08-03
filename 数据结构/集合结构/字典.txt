@@ -1,0 +1,4 @@
+字典特点:一一对应关系,可以通过key取出对应的value
+字典中key的值是不可以重复的,而value是可以重复,字典中key是无序的
+
+例:{'age':18,"name":zhengyangzhi}
