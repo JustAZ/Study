@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid black;
+        /*添加阴影*/
+        transition: box-shadow .3s ease;
+
+    }
+
+    .container :active {
+        border-bottom-width: 0;
+        box-shadow: 0 10px 6px -6px #777;
+    }
+
+    #target {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        margin: 0 auto
+    }
+</style>
+
+<body>
+    <div class="container" ondragenter="onDragEnter(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div id="target" draggable="true" ondragstart="onDragStart(event)">
+            被拖拽元素
+        </div>
+    </div>
+    <div class="container" ondragenter="onDragEnter(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)"></div>
+
+    <div class="container" ondragenter="onDragEnter(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)"></div>
+</body>
+<script>
+    /*
+    1.被拖动元素的相关事件
+        ondragstart:元素开始被拖动时触发
+        ondrag:在元素被拖动时反复触发
+        dragend:在拖动操作完成时触发
+    2.容器的相关事件
+        ondragenter:元素进入容器时触发,一般需要取消浏览器的默认行为
+        ondragover:元素在容器内时触发,也需取消浏览器的默认行为
+        ondragleave:当被拖动元素没有放下,就离开容器时触发
+        ondrop:元素释放到目标容器时触发.一般需要取消浏览器的默认行为
+    
+    */
+    let target = null
+    container = null
+
+    //寻找拖拽元素的容器类
+    function findContainer(node) {
+        if (!node || node == document) {
+            return null
+        }
+        if (node.classList.contains("container")) {
+            return node;
+        }
+        return findContainer(node.parentNode)
+    }
+    //元素开始被拖拽时,标记元素原生的容器类
+    function onDragStart(event) {
+        target = event.target;
+        container = findContainer(target)
+    }
+    //元素进入目的容器时,如果不是原来的容器,则可以放置
+    //此时更改样式,以更好的向用户展示
+    function onDragEnter(event) {
+        event.preventDefault();
+        if (event.target !== container) {
+            event.target.classList.add("active")
+        }
+    }
+    //元素在目的容器内时触发
+    function onDragOver(event) {
+        event.preventDefault();
+        console.log("在目的容器内时触发")
+    }
+    //元素离开目的容器时,需移除相关的样式
+    function onDragLeave(event) {
+        event.preventDefault();
+        event.target.classList.remove("active")
+    }
+    //元素放置在目的容器.添加Dom节点,移除相关样式
+    function onDrop(event) {
+        event.preventDefault();
+        event.target.appendChild(target);
+        event.target.classList.remove("active");
+        target = null;
+        container = null;
+    }
+</script>
+
+</html>

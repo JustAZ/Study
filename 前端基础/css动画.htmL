@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .demo {
+        width: 100px;
+        height: 100px;
+        background-color: rebeccapurple;
+        margin: 0 auto;
+        /* 
+        animation: name duration timing-function delay iteration-count direction;
+        name: animation-name:绑定选择器的名称
+        duration:animation-duration:完成动画所花费的时间
+        timing-fuction:规定动画的速度曲线 
+                liner 匀速 
+                ease 默认.动画以低速开始,然后加快,在结束时减慢
+                ease-in 动画以低速开始
+                ease-out 动画以低速结束
+                ease-in-out 动画以低速开始和结束 
+                cubic-bezier(n,n,n,n) 自定义贝塞尔曲线
+        delay:animation-delay 规定在动画开始之前的延迟
+        interation-count: animation-interation-count 默认为 1 定义动画播放次数 infinite(无限次)
+        direction: animation-direction: normal|alternate ;规定是否反向播放动画 alternate反向播放
+         */
+        -webkit-animation: change 1s ease-in-out;
+        -o-animation: change 1s ease-in-out;
+        -moz-animation: change 1s ease-in-out;
+        animation: change 1s ease-in-out;        
+        /* 让动画停止在最后一帧 */
+        animation-fill-mode: forwards; 
+        /* transform: translate(10%,10%) scale(1.5,1.5) */
+    }
+
+    @keyframes change {
+        from {
+            /* transform: translate(0%, 0%) scale(0, 0) */
+        }
+        to {
+            /*scale放在前,translet放在后,才会生效 */
+            transform: scale(1.5, 1.5)  translate(10%, 10%) 
+        }
+    }
+
+</style>
+
+<body>
+    <div class='demo'>
+        缩放1.5倍 x,y坐标正向移动10%
+    </div>
+</body>
+
+</html>
